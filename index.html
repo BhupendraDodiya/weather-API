@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <style>
+        * {
+            margin: 0px;
+            padding: 0px;
+        }
+
+        body {
+            background-color: rgb(42, 92, 65);
+        }
+
+        #container {
+            background-color: white;
+            width: 500px;
+            height: 335px;
+            border: 5px solid black;
+            text-align: center;
+            margin-left: 500px;
+            margin-top: 150px;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- html code start -->
+    <div class="container-fluid row">
+        <div id="container" class=" text-center .bg-info.bg-gradient">
+            <h1 style="color: rgb(226, 43, 43);font-family: 'Itim', cursive;" class="mt-3"><b><u>CITY</u></b></h1>
+            <input type="text" id="city" class="form-control mt-4 " autofocus placeholder="Enter City Name">
+
+            <h1 style="color: rgb(226, 43, 43);font-family: 'Dancing Script', cursive;" class="mt-3"><b><u>TEMPRATURE OF CITY</u></b></h1>
+            <input type="text" id="result" class="form-control mt-3" readonly>
+
+            <button type="button" onclick="show()" id="btn" class="btn btn-outline-danger mt-4">Show Data</button>
+
+        </div>
+    </div>
+    <!-- html code end -->
+
+
+    <!-- javascript code start -->
+    <script>
+
+        async function show() {
+            let city = document.getElementById('city').value;
+            let res = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=cad7ec124945dcfff04e457e76760d90`);
+            if (city == "") {
+                alert("PLEASE ENTER CITY NAME");
+            }
+            if (res.status == 404) {
+                alert('not found');
+            }
+            let data = await res.json();
+            let t = data.main.temp - 273.15;
+            t = t.toFixed(2);
+            document.getElementById('result').value = t + ' °C';
+
+        }
+    </script>
+    <!-- javascript code end -->
+</body>
+
+</html>
